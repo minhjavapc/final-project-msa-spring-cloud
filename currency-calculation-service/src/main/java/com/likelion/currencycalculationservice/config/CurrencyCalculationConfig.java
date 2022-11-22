@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class CurrencyCalculationConfig {
     @Bean
-    @LoadBalanced
+    @LoadBalanced // annotation này sẽ cân bằng tải cho mỗi requests
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }

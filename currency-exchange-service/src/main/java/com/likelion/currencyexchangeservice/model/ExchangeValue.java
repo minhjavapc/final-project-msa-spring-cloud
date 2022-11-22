@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.math.BigDecimal;
 
-@Entity//(name = "EXCHANGE_VALUE")
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
@@ -22,11 +22,4 @@ public class ExchangeValue {
     private String to;
     private BigDecimal conversionMultiple;
     private int port;
-
-    public ExchangeValue(Long id, String from, String to, BigDecimal conversionMultiple) {
-        this.id = id;
-        this.from = from;
-        this.to = to;
-        this.conversionMultiple = conversionMultiple;
-    }
 }

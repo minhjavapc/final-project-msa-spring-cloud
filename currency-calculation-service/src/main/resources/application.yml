@@ -8,6 +8,6 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: ${EUREKA_SERVER:http://eureka-server:8761/eureka} # đăng ký với eureka server đây là một eureka client
     fetch-registry: true
     register-with-eureka: true

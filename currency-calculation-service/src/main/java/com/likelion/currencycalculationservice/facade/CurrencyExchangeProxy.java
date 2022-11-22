@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 //@FeignClient(name ="currency-exchange-service", url ="http://localhost:8000")
-@FeignClient(name ="CURRENCY-EXCHANGE-SERVICE")
+@FeignClient(name ="CURRENCY-EXCHANGE-SERVICE") // Định nghĩa tên của module Currency Exchange Service đăng ký tại Eureka Server
 public interface CurrencyExchangeProxy {
 //    @GetMapping("/currency-exchange-service/currency-exchange/from/{from}/to/{to}")
     @GetMapping("/currency-exchange/from/{from}/to/{to}")

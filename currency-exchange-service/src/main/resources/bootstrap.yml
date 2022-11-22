@@ -1,40 +1,48 @@
 spring:
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        serviceId: configserver
+      failFast: false
+  application:
+    name: currency-exchange-service
+  profiles:
+    active: dev
+
+server:
+  port: 8000
+# đăng ký với eureka server đây là một eureka client
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_SERVER:http://eureka-server:8761/eureka}
+
+#spring:
   ## ===============================
   ## JPA / HIBERNATE
   ## ===============================
-#  jpa:
-#    properties:
-#      hibernate:
-#        dialect: org.hibernate.dialect.H2Dialect
-#    defer-datasource-initialization: 'true'
-#    show-sql: 'true'
-#    hibernate:
-#      ddl-auto: update
-#  application:
-#    name: currency-exchange-service
-#  ## ===============================
-#  ## DB
-#  ## ===============================
-#  datasource:
-#    driverClassName: org.h2.Driver
-#    password: ''
-#    username: sa
-#    url: jdbc:h2:mem:testdb
+  #  jpa:
+  #    properties:
+  #      hibernate:
+  #        dialect: org.hibernate.dialect.H2Dialect
+  #    defer-datasource-initialization: 'true'
+  #    show-sql: 'true'
+  #    hibernate:
+  #      ddl-auto: update
+  #  application:
+  #    name: currency-exchange-service
+  #  ## ===============================
+  #  ## DB
+  #  ## ===============================
+  #  datasource:
+  #    driverClassName: org.h2.Driver
+  #    password: ''
+  #    username: sa
+  #    url: jdbc:h2:mem:testdb
   ## To See H2 Console in Browser:
   ## http://localhost:8000/h2-console
   ## Enabling H2 Console
 #  h2:
 #    console:
 #      enabled: 'true'
-  cloud:
-    config:
-      uri: http://localhost:8888
-  profiles:
-    active: dev
-server:
-  port: 8000
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka

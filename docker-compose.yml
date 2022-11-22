@@ -1,0 +1,67 @@
+version: '3.7'
+services:
+  eureka-server:
+    container_name: eureka-server
+    build:
+      context: /eureka-server
+      dockerfile: Dockerfile
+    ports:
+      - "8761:8761"
+  configserver:
+    container_name: configserver
+    build:
+      context: /configserver
+      dockerfile: Dockerfile
+    volumes:
+      - ./config-data:/var/config-data
+    environment:
+      - eureka.client.service-url.defaultZone=http://eureka-server:8761/eureka
+      - JAVA_OPTS=
+        -Dspring.cloud.config.server.native.searchLocations=/var/config-data
+        -DEUREKA_SERVER=http://eureka-server:8761/eureka
+    depends_on:
+      - eureka-server
+    ports:
+      - "8888:8888"
+  gateway:
+    container_name: gateway
+    build:
+      context: /gateway
+      dockerfile: Dockerfile
+    environment:
+      - eureka.client.service-url.defaultZone=http://eureka-server:8761/eureka
+      - JAVA_OPTS=
+        -DEUREKA_SERVER=http://eureka-server:8761/eureka
+    depends_on:
+      - eureka-server
+    ports:
+      - "8765:8765"
+  currency-exchange-service:
+    build:
+      context: /currency-exchange-service
+      dockerfile: Dockerfile
+    environment:
+      - eureka.client.service-url.defaultZone=http://eureka-server:8761/eureka
+      - JAVA_OPTS=
+        -DEUREKA_SERVER=http://eureka-server:8761/eureka
+    restart: on-failure
+    depends_on:
+      - eureka-server
+      - configserver
+    deploy:
+      mode: replicated
+      replicas: 2
+  currency-calculation-service:
+    build:
+      context: /currency-calculation-service
+      dockerfile: Dockerfile
+    environment:
+      - eureka.client.service-url.defaultZone=http://eureka-server:8761/eureka
+      - JAVA_OPTS=
+        -DEUREKA_SERVER=http://eureka-server:8761/eureka
+    restart: on-failure
+    depends_on:
+      - eureka-server
+    deploy:
+      mode: replicated
+      replicas: 2
